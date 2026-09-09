@@ -9,28 +9,48 @@ Currently this project is still under-construction , you can see it's goals and 
 ## 2. Why am I getting this repository?
 
 💡
-**You are not getting a coded application yet.** I prepared this repository to hold the initial specifications and designs based on the concepts i already designed.
+**Update for Week 2:** You are now getting the first working slice of the backend application! I have prepared this repository to hold the initial specifications and designs, and now the first coded feature: the HR Requests tracking system.
 
-i use it to learn how engineers plan and structure a project before writing code:
-
-> read the product spec → review the architecture → understand the data model.
-
-You are **not** expected to run any code or install any dependencies. That is not the goal at this stage.
+I am using this to learn how engineers build and test backend APIs based on the initial product specs. You can now run the code and verify the business rules using the automated tests.
 
 ## 3. Which folders and files should I look at first?
 
 ```text
 internaloperationsservicehub/
-├── README.md         <- you are here
-├── product.md        <- the business requirements and product specifications
-├── architecture/     <- system design and infrastructure diagrams
-└── datamodel/        <- database schemas and entity relationships
+├── README.md              <- you are here
+├── docs/                  <- contains product specs, architecture, and data models
+├── src/                   <- the actual backend code (NestJS)
+│   └── requests/          <- the feature slice we just built
+├── run-http-tests.ts      <- the automated test script
+└── package.json           <- dependencies
 ```
 
-The core planning behaviour lives in a small number of files. Start by reviewing the product requirements (`product.md`) before moving on to the architecture and data models.
+The core planning behavior lives in the `docs` folder. The new backend implementation lives in `src/requests`.
 
-## 4. What should I ignore for now?
+## 4. How to run the application
 
-Since this phase is purely focused on the product specification, architecture, and data modeling, there is no application to install or run yet. 
+Now that we have actual code, you can start the development server to test the API manually.
 
-You can safely ignore anything related to Node.js, npm, Git cloning for local development, or starting a development server. i will introduce the working implementation in the next phase.
+1. First, make sure you install the dependencies:
+   ```bash
+   npm install
+   ```
+2. Then, start the development server:
+   ```bash
+   npm run dev
+   ```
+   *(This will start the server on port 3000)*
+
+## 5. How to verify the code works (Automated Tests)
+
+I wrote an automated HTTP test script to prove that the business rules and state constraints (like preventing a ticket from skipping straight to "Resolved") are working perfectly.
+
+To verify the code, run this command in your terminal:
+```bash
+npx tsx run-http-test.ts
+```
+
+**What output = success?**
+If everything is working correctly, the script will output the results of 5 different test phases. You should look for this exact line at the very bottom of the terminal:
+
+`✅ RESULT: ALL HTTP TESTS PASSED. Constraints actively rejected invalid payloads.`
