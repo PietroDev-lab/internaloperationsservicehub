@@ -1,24 +1,27 @@
 {
-  "name": "react-example",
+  "name": "service-hub",
   "private": true,
-  "version": "0.0.0",
-  
+  "type": "module",
   "scripts": {
-    "dev": "tsx watch src/main.ts",
-    "test:slice": "tsx run-tests.ts",
-    "build": "tsc"
+    "dev": "concurrently \"npm run start:api\" \"npm run start:web\"",
+    "start": "npm run dev",
+    "start:api": "tsx watch src/backend/main.ts",
+    "start:web": "vite",
+    "test:unit": "tsx src/backend/requests/requests.service.spec.ts",
+    "test:integration": "tsx run-integration-tests.ts",
+    "test:regression": "tsx run-http-tests.ts"
   },
   "dependencies": {
-    "@google/genai": "^2.4.0",
     "@nestjs/common": "^12.0.1",
     "@nestjs/core": "^12.0.1",
+    "@nestjs/jwt": "^12.0.2",
     "@nestjs/platform-express": "^12.0.1",
     "@tailwindcss/vite": "^4.1.14",
     "@vitejs/plugin-react": "^5.0.4",
-    "dotenv": "^17.2.3",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.15.1",
     "express": "^4.21.2",
     "lucide-react": "^0.546.0",
-    "motion": "^12.23.24",
     "react": "^19.0.1",
     "react-dom": "^19.0.1",
     "reflect-metadata": "^0.2.2",
@@ -26,13 +29,14 @@
     "vite": "^6.2.3"
   },
   "devDependencies": {
-    "@types/node": "^22.14.0",
-    "autoprefixer": "^10.4.21",
-    "esbuild": "^0.25.0",
+    "@prisma/client": "^5.21.1",
+    "@types/node": "^22.20.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "concurrently": "^10.0.5",
+    "prisma": "^5.21.1",
     "tailwindcss": "^4.1.14",
     "tsx": "^4.21.0",
-    "typescript": "~5.8.2",
-    "vite": "^6.2.3",
-    "@types/express": "^4.17.21"
+    "typescript": "~5.8.2"
   }
 }

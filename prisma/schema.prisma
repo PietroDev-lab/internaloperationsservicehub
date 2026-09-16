@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+model Account {
+  employee_id  String    @id
+  role         String
+  display_name String
+  requests     Request[]
+}
+model Request {
+  request_id  String           @id @default(uuid())
+  employee_id String
+  employee    Account          @relation(fields: [employee_id], references: [employee_id])
+  type        String
+  description String
+  status      String           @default("Received")
+  created_at  DateTime         @default(now())
+  updated_at  DateTime         @updatedAt
+  history     RequestHistory[]
+}
+model RequestHistory {
+  log_id        String   @id @default(uuid())
+  request_id    String
+  request       Request  @relation(fields: [request_id], references: [request_id])
+  changed_by_id String
+  old_status    String?
+  new_status    String
+  timestamp     DateTime @default(now())
+}

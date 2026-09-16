@@ -1,19 +1,30 @@
 {
   "compilerOptions": {
-    "module": "CommonJS",
+    "target": "ES2021",
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ES2021"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "types": ["vite/client"],
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "target": "ES2021",
     "sourceMap": true,
     "outDir": "./dist",
     "paths": {
       "*": ["./*"]
     },
-    "incremental": true,
-    "skipLibCheck": true,
-    "strict": true
+    "incremental": true
   }
 }
