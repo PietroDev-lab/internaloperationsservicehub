@@ -8,10 +8,9 @@ Currently this project is still under-construction , you can see it's goals and 
 
 ## 2. Why am I getting this repository?
 
-💡
-**Update for Week 2:** You are now getting the first working slice of the backend application! I have prepared this repository to hold the initial specifications and designs, and now the first coded feature: the HR Requests tracking system.
+💡 **Update for Week 3 (Full-Stack Delivery):** You are now getting the complete full-stack application! We have evolved from a simple backend API into a production-ready monorepo. This includes a polished React frontend, a secure NestJS backend, and a persistent SQLite database managed by Prisma. 
 
-I am using this to learn how engineers build and test backend APIs based on the initial product specs. You can now run the code and verify the business rules using the automated tests.
+I am using this to learn how to deliver a complete, integrated product. You can now run the app, interact with the UI, and verify the business rules using automated Playwright End-to-End browser tests.
 
 ## 3. Which folders and files should I look at first?
 
@@ -19,38 +18,44 @@ I am using this to learn how engineers build and test backend APIs based on the 
 internaloperationsservicehub/
 ├── README.md              <- you are here
 ├── docs/                  <- contains product specs, architecture, and data models
-├── src/                   <- the actual backend code (NestJS)
-│   └── requests/          <- the feature slice we just built
-├── run-http-tests.ts      <- the automated test script
-└── package.json           <- dependencies
+├── prisma/                <- database schema (schema.prisma) and local SQLite database
+├── src/
+│   ├── backend/           <- NestJS API, JWT Auth, and business logic
+│   └── frontend/          <- React UI, Tailwind CSS
+├── tests/                 <- Playwright End-to-End browser tests
+└── package.json           <- dependencies and scripts
 ```
 
-The core planning behavior lives in the `docs` folder. The new backend implementation lives in `src/requests`.
+The core planning behavior lives in the `docs` folder. The new backend implementation lives in `src/backend` and the new UI is in `src/frontend`.
 
 ## 4. How to run the application
 
-Now that we have actual code, you can start the development server to test the API manually.
+Now that we have a full-stack application, you need to set up the database and run both the frontend and backend servers.
 
-1. First, make sure you install the dependencies:
+1. First, make sure you install all dependencies:
    ```bash
    npm install
    ```
-2. Then, start the development server:
+2. Next, generate and push the database schema to create your local SQLite database:
+   ```bash
+   npx prisma db push
+   ```
+3. Finally, start the development servers (this will boot both the API and the React UI simultaneously):
    ```bash
    npm run dev
    ```
-   *(This will start the server on port 3000)*
+   *(The frontend will be available at http://localhost:3000 and the backend API on port 3030)*
 
 ## 5. How to verify the code works (Automated Tests)
 
-I wrote an automated HTTP test script to prove that the business rules and state constraints (like preventing a ticket from skipping straight to "Resolved") are working perfectly.
+For this sprint, we replaced the old HTTP tests with full browser automation using **Playwright**. These End-to-End (E2E) tests verify that the entire system works together seamlessly: an employee can log in, create a request, HR can resolve it, and the employee sees the updated status.
 
-To verify the code, run this command in your terminal:
+To verify the system, run this command in your terminal:
 ```bash
-npx tsx run-http-test.ts
+npm run test:e2e
 ```
 
 **What output = success?**
-If everything is working correctly, the script will output the results of 5 different test phases. You should look for this exact line at the very bottom of the terminal:
+If everything is working correctly, Playwright will run a headless Chromium browser, click through the UI automatically, and output a success message similar to this:
 
-`✅ RESULT: ALL HTTP TESTS PASSED. Constraints actively rejected invalid payloads.`
+`✓  1 [chromium] › tests/e2e.spec.ts:4:3 › Property 7: Meaningful E2E Test (Full Flow) › Employee creates request, HR resolves it, Employee sees update`
